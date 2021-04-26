@@ -13,7 +13,7 @@ You require 2 files to calculate the attendance for a Teams meeting.
 * This file can be reused and updated if the names of the students or users, match with the csv date files of multiple meetings.
 
 Example Filename: attendancecalculation.xlsx
-![Example1](
+
  
 #### DD-MM-YYYY – CSV File
 
