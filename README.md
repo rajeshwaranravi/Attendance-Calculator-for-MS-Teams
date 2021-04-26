@@ -14,6 +14,8 @@ You require 2 files to calculate the attendance for a Teams meeting.
 
 Example Filename: attendancecalculation.xlsx
 
+[example1](https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example1.jpg)
+
  
 #### DD-MM-YYYY – CSV File
 
