@@ -22,6 +22,7 @@ Example Filename: attendancecalculation.xlsx
 * The above date file can be obtained from a Teams meeting by downloading the attendance list. The above file will contain the details of the students or users who joined and left the meeting along with the respective timestamps.
 
 Example Filename: 11-09-2020.csv
+
 <img src = https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example2.jpg>
 
 ### NOTE:
