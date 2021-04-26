@@ -14,7 +14,7 @@ You require 2 files to calculate the attendance for a Teams meeting.
 
 Example Filename: attendancecalculation.xlsx
 
-[example1](https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example1.jpg)
+<img src= https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example1.jpg>
 
  
 #### DD-MM-YYYY – CSV File
@@ -22,6 +22,7 @@ Example Filename: attendancecalculation.xlsx
 * The above date file can be obtained from a Teams meeting by downloading the attendance list. The above file will contain the details of the students or users who joined and left the meeting along with the respective timestamps.
 
 Example Filename: 11-09-2020.csv
+<img src = https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example2.jpg>
 
 ### NOTE:
 
@@ -30,6 +31,8 @@ Example Filename: 11-09-2020.csv
 * Should save the csv file in UTF-8 Format, otherwise the application won’t work.
 
 While saving or downloading the csv file from teams, click on Tools -> Web Options -> Encoding and use the dropdown to save this document as Unicode (UTF-8).
+
+<img src = https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example3.jpg>
 
 
 ## Running the Application
@@ -41,9 +44,13 @@ While saving or downloading the csv file from teams, click on Tools -> Web Optio
 
 * After uploading, verify whether the path displayed is the correct path of the file.
 
+<img src = https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example5.jpg>
+
 * After verifying the path, click the Submit button to calculate the meeting attendance. You will be also shown a message in a command window once the process is completed.
 
 * The results can now be viewed in the attendance calculation file.
+
+<img src = https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example6.jpg>
 
 ### NOTE:
 
