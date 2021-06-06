@@ -43,7 +43,7 @@ While saving or downloading the csv file from teams, click on Tools -> Web Optio
 
 * Upload the attendance calculation file and the date csv files in the format discussed earlier. The final calculated attendance results will be stored in the attendance calculation excel file. You can upload multiple date files if they have the same meeting times for attendance calculation.
 
-* After uploading, verify whether the path displayed is the correct path of the file.
+* After uploading, verify whether the paths displayed are the correct paths of the file.
 
 <img src = https://github.com/rajeshwaranravi/Attendance-Calculator-for-Teams/blob/main/Demo/Example5.jpg>
 
