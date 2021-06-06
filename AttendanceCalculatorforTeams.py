@@ -3,6 +3,7 @@ import pandas as pd
 from tkinter import StringVar, ttk, filedialog
 
 window = tk.Tk()
+window.resizable(width = False, height = False)
 window.title("Attendance Calculator for Teams") # to define the title
 
 canvas1 = tk.Canvas(window, width = 400, height = 620)
@@ -135,7 +136,7 @@ def minitime(a,b):
 
 def browse_file1():
     global file1
-    file1 = filedialog.askopenfilename()
+    file1 = filedialog.askopenfilename(parent = window, filetypes = [('Microsoft Excel Worksheet', '.xlsx')])
     text_file1 = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
     label16 = tk.Label(window, text = text_file1)
     label16.config(font=("Helvetica", 8))
@@ -148,146 +149,163 @@ def browse_file1():
 
 def browse_file2():
     global file2
-    file2 = filedialog.askopenfilename()
-    text_file2 = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
-    label17 = tk.Label(window, text = text_file2)
-    label17.config(font=("Helvetica", 8))
-    canvas1.create_window(200, 525, window = label17)
-    text_file2 = "Date File Path: " + file2
-    label17 = tk.Label(window, text = text_file2)
-    label17.config(font=("Helvetica", 8))
-    canvas1.create_window(200, 525, window = label17)
-    print(file2)
+    csvfiles = filedialog.askopenfilenames(parent = window, filetypes = [('Comma Separated Values Files', '.csv')])
+    file2 = list()
+    file2 = list(window.tk.splitlist(csvfiles))
+
+    frame = tk.Frame(window)
+    frame.place(x = 3, y = 492)
+    listNodes = tk.Listbox(frame, width = 104, height = 3)
+    listNodes.pack(side = "left", fill = "y")
+    scrollbar = tk.Scrollbar(frame, orient = "vertical")
+    scrollbar.config(command = listNodes.yview)
+    scrollbar.pack(side = "right", fill = "y")
+    listNodes.config(yscrollcommand = scrollbar.set)
+    listNodes.insert(1, "Attendance Calculation File Path: " + file1)
+    for x in file2:
+        print(x)
+        listNodes.insert('end', "Date File Path: " + x)
+
 
 def compute():
     df1 = pd.read_excel(file1)
     path = file1
-    df2 = pd.read_csv(file2)
-    date = file2.split('/')[-1].split('.')[0]
-    print(df1)
-    print(df2)
+    for x in file2:
+        df2 = pd.read_csv(x)
+        date = x.split('/')[-1].split('.')[0]
+        print(df1)
+        print(df2)
 
-    h = clicked1.get()
-    m = clicked2.get()
-    s = clicked3.get()
-    t = clicked4.get()
-    if len(h) == 1:
-        h = "0" + str(h)
-    if len(m) == 1:
-        m = "0" + str(m)
-    if len(s) == 1:
-        s = "0" + str(s)
-    start_time = h + ":" + m + ":" + s + " " + t
-    print(start_time)
+        h = clicked1.get()
+        m = clicked2.get()
+        s = clicked3.get()
+        t = clicked4.get()
+        if len(h) == 1:
+            h = "0" + str(h)
+        if len(m) == 1:
+            m = "0" + str(m)
+        if len(s) == 1:
+            s = "0" + str(s)
+        start_time = h + ":" + m + ":" + s + " " + t
+        print(start_time)
 
-    h = clicked5.get()
-    m = clicked6.get()
-    s = clicked7.get()
-    t = clicked8.get()
-    if len(h) == 1:
-        h = "0" + str(h)
-    if len(m) == 1:
-        m = "0" + str(m)
-    if len(s) == 1:
-        s = "0" + str(s)
-    end_time = h + ":" + m + ":" + s + " " + t
-    print(end_time)
+        h = clicked5.get()
+        m = clicked6.get()
+        s = clicked7.get()
+        t = clicked8.get()
+        if len(h) == 1:
+            h = "0" + str(h)
+        if len(m) == 1:
+            m = "0" + str(m)
+        if len(s) == 1:
+            s = "0" + str(s)
+        end_time = h + ":" + m + ":" + s + " " + t
+        print(end_time)
 
-    thers = entry3.get()
-    print(thers)
-    print(date)
+        thers = entry3.get()
+        print(thers)
+        print(date)
 
-    stud_attend = {}.fromkeys(df2["Full Name"])
-    for i in stud_attend:
-        i.strip(" ").upper
+        stud_attend = {}.fromkeys(df2["Full Name"])
+        for i in stud_attend:
+            i.strip(" ").upper
 
-    #Timestamp extraction for individual students
-    l = []
-    for i in stud_attend:
-        for j in range(0,len(df2["Full Name"])):
-            if i == df2["Full Name"][j]:
-                l.append(df2["Timestamp"][j].split(",")[1].lstrip(" "))
-        stud_attend[i] = l
+        #Timestamp extraction for individual students
         l = []
+        for i in stud_attend:
+            for j in range(0,len(df2["Full Name"])):
+                if i == df2["Full Name"][j]:
+                    l.append(df2["Timestamp"][j].split(",")[1].lstrip(" "))
+            stud_attend[i] = l
+            l = []
 
-    #Calculate difference between every joining and left time and calculate whether the person is present for given threshold
-    #True if he is present and False, if he is absent
-    tot_time = difftime(start_time, end_time)
+        #Calculate difference between every joining and left time and calculate whether the person is present for given threshold
+        #True if he is present and False, if he is absent
+        tot_time = difftime(start_time, end_time)
 
-    #If the person not attended meeting itself means set False for that person
-    for i in stud_attend:
-        sumtime = 0
-        x = stud_attend[i]
-        if not (minitime(x[0],start_time)):
-            x[0] = start_time
-        if (len(x) % 2) == 0 and minitime(end_time,x[-1]):
-            x[-1] = end_time
-        if (len(x) % 2) != 0:
-            x.append(end_time)
-        for j in range(0, len(x), 2):
-            sum_time = difftime(x[j], x[j+1])
-        if sum_time >= eval(thers)*tot_time / 100:
-            stud_attend[i] = True
-        else:
-            stud_attend[i] = False
+        #If the person not attended meeting itself means set False for that person
+        for i in stud_attend:
+            sumtime = 0
+            x = stud_attend[i]
+            if not (minitime(x[0],start_time)):
+                x[0] = start_time
+            if (len(x) % 2) == 0 and minitime(end_time,x[-1]):
+                x[-1] = end_time
+            if (len(x) % 2) != 0:
+                x.append(end_time)
+            for j in range(0, len(x), 2):
+                sum_time = difftime(x[j], x[j+1])
+            if sum_time >= eval(thers)*tot_time / 100:
+                stud_attend[i] = "PRESENT"
+            else:
+                stud_attend[i] = "ABSENT"
 
 
-    #Empty column creation for the person to append the attendance list created
-    for i in df1["FULL NAME"]:
-        if i.upper().strip(" ") not in stud_attend:
-            stud_attend[i.upper().strip(" ")] = False
+        #Empty column creation for the person to append the attendance list created
+        for i in df1["FULL NAME"]:
+            if i.upper().strip(" ") not in stud_attend:
+                stud_attend[i.upper().strip(" ")] = "ABSENT"
 
-    #Empty column creation for the person to append the attendance list created
-    df1[date] = list(range(0, len(df1["FULL NAME"])))
+        #Empty column creation for the person to append the attendance list created
+        df1[date] = list(range(0, len(df1["FULL NAME"])))
 
-    #For each person put the value True or False according to rules defined above
-    d = list(df1["FULL NAME"])
+        #For each person put the value True or False according to rules defined above
+        d = list(df1["FULL NAME"])
 
-    for i in d:
-      df1[date][d.index(i)] = stud_attend[i.upper().strip(" ")]
-      print(stud_attend[i.upper().strip("s ")])
+        for i in d:
+          df1[date][d.index(i)] = stud_attend[i.upper().strip(" ")]
+          print(stud_attend[i.upper().strip("s ")])
 
-    #Get the xlsx file and save it for future use
-    df1.to_excel(path, index = False)
+        df3 = df1[[ "ROLL NO", "FULL NAME"]].copy()
 
-    print(df1)
-    print(df2)
-    print(start_time)
-    print(end_time)
-    print(thers)
+        df1 = df1.sort_index(ascending = True, axis = 1)
+
+        for column in df1.columns:
+            if ((column != "ROLL NO") or (column != "FULL NAME")):
+                df3[column] = df1[column]
+
+        #Get the xlsx file and save it for future use
+        df3.to_excel(path, index = False)
+
+        print(df1)
+        print(df2)
+        print(df3)
+        print(start_time)
+        print(end_time)
+        print(thers)
 
     print('\nDone and Dusted')
 
 button1 = tk.Button(text = 'Upload Attendance calculation file', command = browse_file1, bg = 'brown',fg = 'white', activebackground='green')
 canvas1.create_window(150, 410, window = button1)
 
-button2 = tk.Button(text = 'Upload Date file', command = browse_file2, bg = 'brown',fg = 'white', activebackground='green')
+button2 = tk.Button(text = 'Upload Date files', command = browse_file2, bg = 'brown',fg = 'white', activebackground='green')
 canvas1.create_window(300, 410, window = button2)
 
 text_button1 =  u'\u24D8' + " Click the *Upload Attendance calculation file* button to upload the excel file\ncontaining the names of all the students of that paper or subject"
 label11 = tk.Label(window, text = text_button1)
 canvas1.create_window(200, 440, window = label11)
 
-text_button2 =  u'\u24D8' + " Click the *Upload Date file* button to upload the csv file\nof a particular day's class meeting attendance"
+text_button2 =  u'\u24D8' + " Click the *Upload Date files* button to upload the csv file of multiple days\nor a particular day's class meeting attendance"
 label14 = tk.Label(window, text = text_button2)
 canvas1.create_window(200, 475, window = label14)
 
 button3 = tk.Button(text = 'Submit', command = compute, bg = 'brown',fg = 'white', activebackground='green')
-canvas1.create_window(200, 550, window = button3)
+canvas1.create_window(200, 558, window = button3)
 
 text_button3 =  u'\u24D8' + " Click the above button to calculate Attendance"
 label15 = tk.Label(window, text = text_button3)
-canvas1.create_window(200, 570, window = label15)
+canvas1.create_window(200, 580, window = label15)
 
 text_copyright1 =  "App created by Vijayavelu SS and Rajeshwaran R for calculating attendance in a Microsoft Teams meeting"
 label12 = tk.Label(window, text = text_copyright1)
 label12.config(font=("Comic Sans MS", 8))
-canvas1.create_window(200, 600, window = label12)
+canvas1.create_window(200, 605, window = label12)
 
 text_copyright2 =  u'\u00a9' + "Copyright 2020-2021 Vijayavelu SS and Rajeshwaran R"
 label13 = tk.Label(window, text = text_copyright2)
 label13.config(font=("Comic Sans MS", 12))
-canvas1.create_window(200, 625, window = label13)
+canvas1.create_window(200, 630, window = label13)
 
 window.geometry("650x650")
 window.mainloop()
