@@ -4,7 +4,7 @@ Source Code and Application for calculating Attendance of students or people in 
 
 ## Files Prep
 
-You require 2 files to calculate the attendance for a Teams meeting.
+You require atleast 2 files to calculate the attendance for a Teams meeting.
 
 #### Attendance Calculation – Excel File
 
@@ -19,7 +19,7 @@ Example Filename: attendancecalculation.xlsx
  
 #### DD-MM-YYYY – CSV File
 
-* The above date file can be obtained from a Teams meeting by downloading the attendance list. The above file will contain the details of the students or users who joined and left the meeting along with the respective timestamps.
+* The date files in the above format can be obtained from a Teams meeting by downloading the attendance list. The above files contain the details of the students or users who joined and left the meeting along with the respective timestamps.
 
 Example Filename: 11-09-2020.csv
 
@@ -41,7 +41,7 @@ While saving or downloading the csv file from teams, click on Tools -> Web Optio
 
 * Enter the threshold percentage value (0-100). A value of 0 indicates that a student or user need not even attend the meeting to be awarded attendance whereas a value of 100 indicates that the student or user should be present throughout the meeting exactly from the start time till the end time. A value of 75 – 90 is recommended.
 
-* Upload the attendance calculation file and the date csv file in the format discussed earlier. The final calculated attendance results will be stored in the attendance calculation excel file.
+* Upload the attendance calculation file and the date csv files in the format discussed earlier. The final calculated attendance results will be stored in the attendance calculation excel file. You can upload multiple date files if they have the same meeting times for attendance calculation.
 
 * After uploading, verify whether the path displayed is the correct path of the file.
 
